@@ -13,8 +13,11 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $categoriesWithNews = Category::with('news')->get();
-        return response()->json(['categoriesWithNews' => $categoriesWithNews]);
+        $newsWithCategories = News::query()
+        ->join('categories','categories.id','=','news.category_id')
+        ->select('categories.id as category_id', 'categories.name','news.*')
+        ->get();
+        return response()->json(['categoriesWithNews' => $newsWithCategories]);
     }
 
     /**
