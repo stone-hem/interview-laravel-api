@@ -8,25 +8,30 @@ use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         $newsWithCategories = News::query()
-        ->join('categories','categories.id','=','news.category_id')
-        ->select('categories.id as category_id', 'categories.name','news.*')
-        ->get();
-        return response()->json(['categoriesWithNews' => $newsWithCategories]);
+            ->join('categories', 'categories.id', '=', 'news.category_id')
+            ->select('categories.id as category_id', 'categories.name', 'news.*')
+            ->limit(5)
+            ->get();
+        return response()->json($newsWithCategories);
+    }
+    
+    public function categoryWithNews(String $id)
+    {
+       $news = News::where('category_id',$id)->get();
+        return response()->json($news);
     }
 
-    /**
-     * Display the specified resource.
-     */
+    public function categories()
+    {
+        $categories = Category::all();
+        return response()->json($categories);
+    }
     public function showNews(string $id)
     {
-        // Get the category of a specific news article
         $newsArticle = News::find($id)->category;
-        return response()->json(['newsArticles'=>$newsArticle]);
+        return response()->json(['newsArticles' => $newsArticle]);
     }
 }

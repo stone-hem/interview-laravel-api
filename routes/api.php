@@ -20,8 +20,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // Route::middleware('')->group(function () {
-    Route::controller(NewsController::class)->group(function () {
-        Route::get('recent-news','index');
-        Route::get('show-news/{id}', 'index');
-    });
+Route::controller(NewsController::class)->group(function () {
+    Route::get('recent', 'index');
+    Route::get('categories/{id}', 'categoryWithNews');
+    Route::get('categories', 'categories');
+    Route::get('show-news/{id}', 'index');
+});
 // });
