@@ -34,9 +34,12 @@ class NewsController extends Controller
         $newsArticle = News::find($id)->category;
         return response()->json($newsArticle);
     }
-    public function search(string $search)
+    public function search(?string $search = null)
     {
-        $news = News::where('title', 'like',"%$search%")->OrWhere('description', 'like', "%$search%")->get();
+        $news=[];
+        if ($search) {
+            $news = News::where('title', 'like', "%$search%")->OrWhere('description', 'like', "%$search%")->get();
+        }
         return response()->json($news);
     }
 }

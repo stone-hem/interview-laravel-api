@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // Route::middleware('')->group(function () {
 Route::controller(NewsController::class)->group(function () {
     Route::get('recent', 'index');
-    Route::get('search/{search}', 'search');
+    Route::get('search/{search?}', 'search');
     Route::get('categories/{id}', 'categoryWithNews');
     Route::get('categories', 'categories');
     Route::get('show/{id}', 'show');
